@@ -1,0 +1,20 @@
+spring:
+  thymeleaf:
+    cache: false
+    prefix: file:src/main/resources/templates/
+
+server:
+  port: 9090
+
+logging:
+    file:
+      path: src/main/resources/logs/
+
+paths:
+  report-storage-path: "/home/alexei/Документы/TMP/"
+  employee-storage-path: "/home/alexei/dev/employee.json"
+  arshin-vri-uri: "https://fgis.gost.ru/fundmetrology/eapi/vri?"
+
+organization:
+  sign:
+  title:
