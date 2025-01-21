@@ -28,6 +28,10 @@ private PathsConfig paths;
 private OrganizationConfig organizationConfig;
 
     public VriItem findVerificationRecordsData(VerificationRecord record) throws ArshinResponseException {
+        if (organizationConfig.getTitle().isEmpty()){
+            throw new ArshinResponseException("Не указано  наименование организации в файле конфигурации." +
+                    " Наименование должно быть указано также как и в ФГИС \"Аршин\" в разделе поверка СИ");
+        }
         log.info("Получение данных ФГИС \"Аршин\" для записи о поверке {} зав. №{} поверенного {}"
                 , record.getTypeMeasurementInstrument(), record.getSerialNumber(), record.getDateVerification());
             List<String> modificationParts = Arrays.stream(record.getTypeMeasurementInstrument().trim().split(" ")).toList();

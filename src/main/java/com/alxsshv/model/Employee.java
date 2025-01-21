@@ -1,5 +1,7 @@
 package com.alxsshv.model;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +15,14 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Employee {
     private int id;
+    @NotNull(message = "Укажите имя поверителя")
     private String name;
+    @NotNull(message = "Укажите фамилию поверителя")
     private String surname;
+    @NotNull(message = "Укажите отчество поверителя")
     private String patronymic;
+    @NotNull(message = "Укажите СНИЛС поверителя")
+    @Size(min = 11,max = 11, message = "Неверный формат СНИЛС")
     private String snils;
 
     public void updateFrom(Employee employeeData){

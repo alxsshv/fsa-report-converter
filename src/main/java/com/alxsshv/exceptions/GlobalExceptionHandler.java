@@ -4,6 +4,7 @@ import com.alxsshv.utils.ServiceMessage;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -23,6 +24,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> catchIOException(IOException ex){
         log.error(ex.getMessage());
         return ResponseEntity.status(500).body(new ServiceMessage(ex.getMessage()));
+    }
+
+    @ExceptionHandler
+    public void catchHttpMessageNotWritableException(HttpMessageNotWritableException ex){
+        log.error(ex.getMessage());
     }
 
     @ExceptionHandler

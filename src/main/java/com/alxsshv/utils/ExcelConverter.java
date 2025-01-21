@@ -18,7 +18,7 @@ import java.util.List;
 public class ExcelConverter {
 
     public List<ArshinDataObject> getDataFromExcelFile(MultipartFile file) throws IOException {
-        log.info("Читаем данные из файла {}", file.getName());
+        log.info("Читаем данные из файла");
         InputStream is = new BufferedInputStream(file.getInputStream());
         return Poiji.fromExcel(is, PoijiExcelType.XLSX, ArshinDataObject.class);
     }

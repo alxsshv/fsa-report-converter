@@ -23,15 +23,15 @@ import java.util.List;
         }
 
         @GetMapping("/{id}")
-        public ResponseEntity<?> getEmployee(@PathVariable("id") String id) throws IOException {
-            return employeeService.findById(Integer.parseInt(id));
+        public ResponseEntity<?> getEmployee(@PathVariable("id") int id) throws IOException {
+            return employeeService.findById(id);
         }
         @PostMapping
         public ResponseEntity<?> addEmployee(@RequestBody Employee employee) throws IOException {
             return employeeService.save(employee);
         }
 
-        @PatchMapping("{id}")
+        @PutMapping("{id}")
         public ResponseEntity<?> editEmployee(@RequestBody Employee employee) throws IOException {
             return employeeService.update(employee);
         }

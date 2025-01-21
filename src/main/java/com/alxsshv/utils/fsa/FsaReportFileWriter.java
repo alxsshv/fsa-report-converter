@@ -6,19 +6,16 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 @Component
 @AllArgsConstructor
 @Slf4j
 public class FsaReportFileWriter {
-    public void writeToFile(FsaReportMessage message, String filePath) throws IOException {
-        writeFsaXMLFile(message,filePath);
-        deleteEmptyTagsFromFile(filePath);
+    public void writeToFile(FsaReportMessage message, String filePath) throws FileNotFoundException {
+            writeFsaXMLFile(message, filePath);
+            deleteEmptyTagsFromFile(filePath);
     }
 
     private void writeFsaXMLFile(FsaReportMessage message, String filePath) {
@@ -26,7 +23,7 @@ public class FsaReportFileWriter {
         writer.write(message, filePath);
     }
 
-    private void deleteEmptyTagsFromFile(String filePath) throws IOException {
+    private void deleteEmptyTagsFromFile(String filePath) throws FileNotFoundException {
         File file = new File(filePath);
         StringBuilder builder = new StringBuilder();
         try {
@@ -43,7 +40,7 @@ public class FsaReportFileWriter {
             writer.close();
         } catch (IOException ex) {
             log.error(ex.getMessage());
-            throw new IOException("Файл " + file.getName() + " не найден или не содержит записей");
+            throw new FileNotFoundException("Файл " + file.getName() + " не найден или не содержит записей");
         }
     }
 }

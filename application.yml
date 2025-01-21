@@ -8,10 +8,10 @@ server:
 
 logging:
     file:
-      path: src/main/resources/logs/
+      path: src/logs/
 
 paths:
-  report-storage-path: "/home/alexei/Документы/TMP/"
+  report-storage-path: "/home/alexei/Documents/TMP/FsaReports"
   employee-storage-path: "/home/alexei/dev/employee.json"
   arshin-vri-uri: "https://fgis.gost.ru/fundmetrology/eapi/vri?"
 

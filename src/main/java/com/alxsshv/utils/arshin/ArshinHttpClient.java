@@ -8,6 +8,8 @@ import com.alxsshv.utils.arshin.entities.vri.VriItem;
 import com.alxsshv.utils.arshin.entities.vri.VriResponse;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
@@ -15,6 +17,7 @@ import org.springframework.web.client.RestClient;
 
 @Getter
 @Setter
+@Slf4j
 public class ArshinHttpClient {
     private static int failCountLimit = 5;
 
@@ -27,7 +30,11 @@ public class ArshinHttpClient {
             }
             throw new ArshinResponseException(getErrorMessage(response));
         } catch (ResourceAccessException ex) {
-            throw new ArshinResponseException("Ошибка соединения с сервером ФГИС\"Аршин\". Проверьте интернет соединение и доступность серверов ФГИС \"Аршин\"");
+            log.error(ex.getMessage());
+            throw new ArshinResponseException("Ошибка соединения с сервером ФГИС \"Аршин\". Проверьте интернет соединение и доступность серверов ФГИС \"Аршин\"");
+        } catch (HttpClientErrorException ex) {
+            log.error(ex.getMessage());
+            throw new ArshinResponseException("Ошибка взаимодейтсвия ПО с сервером ФГИС \"Аршин\". Пожалуйста повторите попытку");
         } catch (HttpServerErrorException ex) {
             if (failCount < failCountLimit) {
                 failCount++;

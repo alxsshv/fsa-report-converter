@@ -32,12 +32,19 @@
                 responseBody = response.data;
                 filename = responseBody.filename;
                 $scope.records = responseBody.records;
+                indexingRecords();
                 formData = new FormData();
             }, function errorCallback(response){
                 hideMessage("pleaseWaitMessage")
                 alert(response.data.message);
                 console.log(response.data.message)
             });
+        }
+
+        function indexingRecords(){
+         for (let i = 0; i < $scope.records.length; i++) {
+            $scope.records[i].index = i+1;
+         }
         }
 
         let formData = new FormData();
@@ -60,7 +67,7 @@
 
 
         $scope.createXML = function () {
-            window.location.href = "/convert/xml?filename="+filename;
+            window.location.href = "/xml?filename="+filename;
         }
 
     });
@@ -80,6 +87,7 @@
         <div class="row">
             <table class="table table-primary table-striped table-hover">
                 <tr>
+                    <th>№ п/п</th>
                     <th>Номер записи</th>
                     <th>Дата поверки</th>
                     <th>Дата действия поверки</th>
@@ -88,9 +96,8 @@
                     <th>Результат поверки</th>
                 </tr>
                 <tr ng-repeat="record in records">
-                    <td><a
-                            href="https://fgis.gost.ru/fundmetrology/cm/results/{{record.vriId}}">{{record.numberVerification}}</a>
-                    </td>
+                    <td>{{record.index}}</td>
+                    <td><a href="https://fgis.gost.ru/fundmetrology/cm/results/{{record.vriId}}">{{record.numberVerification}}</a></td>
                     <td>{{record.dateVerification}}</td>
                     <td>{{record.dateEndVerification}}</td>
                     <td>{{record.typeMeasurementInstrument}}</td>
